@@ -14,6 +14,7 @@ export default function Home() {
 
   const { posts } = context;
   const [selected, setSelected] = useState('latest');
+  {/* 현재와 같은 상태 관리도 좋지만 추후에 정렬 조건이 더 많아질 것을 고려해 객체로 관리해 확장성을 생각해보면 좋을 것 같습니다 */}
 
   const sortedPosts = [...posts].sort((a, b) =>
     selected === "latest" ? b.id - a.id : a.id - b.id
@@ -26,7 +27,8 @@ export default function Home() {
         <View style={styles.profileArea}>
           <TouchableOpacity
             style={styles.profile}
-            onPress={() => router.push("/user")}
+            onPress={() => router.push("/user")} {/* 바꿀 필요는 없지만 Expo에서는 router.push도 좋지만 Link를 사용하는 것이 성능적인 면에서 더 좋습니다*/}
+
           >
             <View style={styles.userName}>
                 <Text style={{fontSize: 15, fontWeight: 600,}}>사용자1</Text>
@@ -34,7 +36,7 @@ export default function Home() {
             <View>
               <Image 
                 source={require('@/app/assets/teraLogo.png')}
-                alt="User 1"
+                alt="User 1" {/* RN에서는 alt의 의미가 크게 없기에 제거해도 좋습니다 */}
                 style={{ width: 40, height: 40, borderRadius: 100 }}
               />
             </View>
@@ -93,10 +95,10 @@ export default function Home() {
                         />
                       </View>
 
-                        <View style={styles.info}>
+                        <View style={styles.info}> {/* 이 부분이 중복되는 것 같습니다 */}
                           <View style={styles.writeAndDate}>
                             <View style={styles.textInfo}>
-                              <Text style={{fontSize: 12, fontWeight: 'bold',}}>by</Text>
+                              <Text style={{fontSize: 12, fontWeight: 'bold',}}>by</Text> {/* 반복되는 스타일은 만들어두는 것도 나쁘지 않은 코드입니다 */}
                               <Text style={{fontSize: 12, fontWeight: 'bold', color:'#6C67FF'}}>{post.userId}</Text>
                             </View>
                             <View style={styles.textInfo}>
@@ -126,10 +128,11 @@ export default function Home() {
       </View>
     </SafeAreaView>
   );
-}
+} // 중복되는 부분을 컴포넌트화 시키는 게 더 깔끔할 것 같습니다
 
 const styles = StyleSheet.create({
   // Container
+  // 위와 같은 불필요한 주석은 제거하는게 좋습니다
   container: {
     flex: 1,
     alignItems: 'center',
@@ -234,4 +237,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   }
-})
+}) // 하나의 스타일 시트에 너무 많은 내용이 담겨있습니다
