@@ -26,4 +26,4 @@ export default function Post() {
             </View>
         </View>
     )
-}
+} // Post 컴포넌트가 정적이며, props 타입을 지정해두고 사용하지 않고 있습니다
