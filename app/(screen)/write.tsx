@@ -6,11 +6,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import {PostContext} from '@/app/context/PostContext'
 
 export default function Write() {
-  const [inputHeight, setInputHeight] = useState(0);
+  const [inputHeight, setInputHeight] = useState(0); // 기본값을 아래 Max와 맞추어 40정도로 주는 것도 괜찮습니다
 
   const router = useRouter(); // 페이지 이동에 사용
   const context = useContext(PostContext);
-  if (!context) return null;
+  if (!context) return null; // 이런식으로 처리하게 될 경우 추후에 힘들어질 가능성이 있습니다, Error를 던지는 것이 훨씬 좋은 선택일 것 같습니다
 
   const { posts, setPosts } = context;
 
@@ -22,7 +22,7 @@ export default function Write() {
     if (!title.trim() || !content.trim()) return;
 
     const newPost = {
-      id: Date.now(),
+      id: Date.now(), // id는 중복될 가능성이 높기 때문에 uuid와 같은 독립적인 명칭을 사용하는 것이 좋을 것 같습니다
       title,
       content,
       userId,
@@ -57,14 +57,14 @@ export default function Write() {
                       style={styles.title}
                       placeholder="제목 입력"
                       value={title}
-                      onChangeText={setTitle}
+                      onChangeText={setTitle} {/* 바로 넘기는 것도 좋지만 지금처럼 단순한 컴포넌트가 아닐 경우에는 기능이 추가되거나 디버깅 용도로 별도 함수로 빼는 것도 좋습니다*/}
                     />
                     <TextInput
                       style={[styles.content, {height: Math.max(40, inputHeight)}]}
                       value={content}
                       placeholder="내용 입력"
                       multiline
-                      onChangeText={setContent}
+                      onChangeText={setContent} {/* 바로 넘기는 것도 좋지만 지금처럼 단순한 컴포넌트가 아닐 경우에는 기능이 추가되거나 디버깅 용도로 별도 함수로 빼는 것도 좋습니다*/}
                       onContentSizeChange={(e) =>
                         setInputHeight(e.nativeEvent.contentSize.height)
                       }
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: 'white',
-  },
+  }, // 자주 쓰는 스타일은 공통화 하는 것이 좋습니다
   addImageButton: {
     flexDirection: 'row',
     alignItems: 'center',

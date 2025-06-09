@@ -2,11 +2,11 @@ import { SafeAreaView, View, Text, TouchableOpacity, TextInput, StyleSheet } fro
 import { useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import { PostContext } from "@/app/context/PostContext";
-import { useState } from "react";
+import { useState } from "react"; // Import를 두번합니다 하나로 합치는 것이 깔끔할 것 같습니다
 import BackButton from "@/app/components/common/backButton";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function Write() {
+export default function Write() { // 컴포넌트 이름이 직관적이지 않고, 헷갈릴 수 있을 것 같습니다 수정하는 것이 좋아보입니다
     const [inputHeight, setInputHeight] = useState(0);
     const { id } = useLocalSearchParams();
     const context = useContext(PostContext);
@@ -50,7 +50,7 @@ export default function Write() {
                       onContentSizeChange={(e) =>
                         setInputHeight(e.nativeEvent.contentSize.height)
                       }
-                    />
+                    /> {/* 이렇게 되어 있으면 읽기만 가능할 것 같습니다 onChangeText를 활용해봅시다*/}
                 </View>
               </View>
           </View>

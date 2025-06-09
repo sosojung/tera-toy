@@ -11,10 +11,10 @@ export default function Register() {
             <Text style={styles.text}>TERA</Text>
             <View>
               <Text style={styles.loginText}>회원가입</Text>
-              <View>
+              <View> {/* 여기 있는 View는 불필요한 것 같습니다*/}
                 <TextInput style={styles.input} placeholder="이메일" />
                 <TextInput style={styles.input} placeholder="아이디" />
-                <TextInput style={styles.input} placeholder="비밀번호" />
+                <TextInput style={styles.input} placeholder="비밀번호" />  {/* 보안상 secureTextEntry가 들어가면 좋을 것 같습니다*/}
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                     <TextInput style={styles.confirmInput} placeholder="비밀번호 확인" />
                     <TouchableOpacity style={styles.confirmButton}>
