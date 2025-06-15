@@ -1,12 +1,13 @@
 import { SafeAreaView, View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import BackButton from "../components/common/backButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import commonStyles, { buttonStyles } from "../styles/common";
 
 export default function Read() {
     return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.wrapper}>
-            <View style={styles.writeWrap1}>
+        <SafeAreaView style={commonStyles.container}>
+          <View style={commonStyles.wrapper}>
+            <View style={commonStyles.writeWrap1}>
               <BackButton />
               <View style={{flexDirection:'row', alignItems:'center', gap:4,}}>
                 <AntDesign name="heart" size={16} color="#6C67FF" />
@@ -46,8 +47,8 @@ export default function Read() {
             </View>
             <View style={styles.commentFrom}>
               <TextInput style={styles.textHolder}placeholder="댓글을 작성해주세요"/>
-              <TouchableOpacity style={styles.button}>
-                <Text style={{fontSize:15, fontWeight:'bold', color:'white'}}>작성</Text>
+              <TouchableOpacity style={buttonStyles.button}>
+                <Text style={buttonStyles.buttonText}>작성</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.comment}>
@@ -69,25 +70,6 @@ export default function Read() {
 }
 
 const styles = StyleSheet.create({
-    // Container
-    container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
-    wrapper: {
-      width: "100%",
-      height: "100%",
-      paddingTop: 78,
-      paddingHorizontal: 20,
-      paddingBottom: 41,
-    },
-    writeWrap1: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingVertical: 4,
-      paddingHorizontal: 12,
-    },
     titleAndImage: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -130,13 +112,6 @@ const styles = StyleSheet.create({
       fontSize: 12,
       fontWeight: 'bold',
       color: '#808080',
-    },
-    button: {
-      justifyContent: 'center',
-      borderRadius: 8,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      backgroundColor: '#6C67FF',
     },
     comment: {
       paddingTop: 8,

@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { PostContext } from "@/app/context/PostContext";
 import BackButton from "@/app/components/common/backButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import commonStyles, { buttonStyles } from "@/app/styles/common";
 
 export default function Read() {
     const { id } = useLocalSearchParams();
@@ -14,16 +15,16 @@ export default function Read() {
     }
 
     const { posts } = context;
-    const post = posts.find((post) => post.id === Number(id));
+    const post = posts.find((post) => post.id === id);
 
     if (!post) {
         return <Text>게시물을 찾을 수 없습니다.</Text>; // post가 없으면 예외 처리
       }
 
     return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.wrapper}>
-            <View style={styles.writeWrap1}>
+        <SafeAreaView style={commonStyles.container}>
+          <View style={commonStyles.wrapper}>
+            <View style={commonStyles.writeWrap1}>
               <BackButton />
               <View style={{flexDirection:'row', alignItems:'center', gap:4,}}>
                 <AntDesign name="heart" size={16} color="#6C67FF" />
@@ -55,7 +56,7 @@ export default function Read() {
             </View>
             <View style={styles.commentFrom}>
               <TextInput style={styles.textHolder}placeholder="댓글을 작성해주세요"/>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={buttonStyles.button}>
                 <Text style={{fontSize:15, fontWeight:'bold', color:'white'}}>작성</Text>
               </TouchableOpacity>
             </View>
@@ -78,25 +79,6 @@ export default function Read() {
 }
 
 const styles = StyleSheet.create({
-    // Container
-    container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
-    wrapper: {
-      width: "100%",
-      height: "100%",
-      paddingTop: 78,
-      paddingHorizontal: 20,
-      paddingBottom: 41,
-    },
-    writeWrap1: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingVertical: 4,
-      paddingHorizontal: 12,
-    },
     titleAndImage: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -139,13 +121,6 @@ const styles = StyleSheet.create({
       fontSize: 12,
       fontWeight: 'bold',
       color: '#808080',
-    },
-    button: {
-      justifyContent: 'center',
-      borderRadius: 8,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      backgroundColor: '#6C67FF',
     },
     comment: {
       paddingTop: 8,

@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import { PostContext } from "@/app/context/PostContext";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import commonStyles from "../styles/common";
 
 export default function Home() {
   const router = useRouter();
@@ -22,12 +23,12 @@ export default function Home() {
   console.log("sortedPosts.length:", sortedPosts.length);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.wrapper}>
+    <SafeAreaView style={commonStyles.container}>
+      <View style={commonStyles.wrapper}>
         <View style={styles.profileArea}>
           <TouchableOpacity
             style={styles.profile}
-            onPress={() => router.push("/user")} {/* 바꿀 필요는 없지만 Expo에서는 router.push도 좋지만 Link를 사용하는 것이 성능적인 면에서 더 좋습니다*/}
+            onPress={() => router.push("/user")}
 
           >
             <View style={styles.userName}>
@@ -36,7 +37,6 @@ export default function Home() {
             <View>
               <Image 
                 source={require('@/app/assets/teraLogo.png')}
-                alt="User 1" {/* RN에서는 alt의 의미가 크게 없기에 제거해도 좋습니다 */}
                 style={{ width: 40, height: 40, borderRadius: 100 }}
               />
             </View>
@@ -90,7 +90,6 @@ export default function Home() {
                         </View>
                         <Image 
                           source={require('@/app/assets/teraLogo.png')}
-                          alt="User 1"
                           style={{ width: 84, height: 84, borderRadius: 8 }}
                         />
                       </View>
@@ -98,12 +97,12 @@ export default function Home() {
                         <View style={styles.info}> {/* 이 부분이 중복되는 것 같습니다 */}
                           <View style={styles.writeAndDate}>
                             <View style={styles.textInfo}>
-                              <Text style={{fontSize: 12, fontWeight: 'bold',}}>by</Text> {/* 반복되는 스타일은 만들어두는 것도 나쁘지 않은 코드입니다 */}
-                              <Text style={{fontSize: 12, fontWeight: 'bold', color:'#6C67FF'}}>{post.userId}</Text>
+                              <Text style={styles.fontStyle}>by</Text>
+                              <Text style={[styles.fontStyle, {color:'#6C67FF'}]}>{post.userId}</Text>
                             </View>
                             <View style={styles.textInfo}>
-                              <Text style={{fontSize: 12, fontWeight: 'bold',}}>작성일</Text>
-                              <Text style={{fontSize: 12, fontWeight: 'bold', color:'#6C67FF'}}>{post.id}</Text>
+                              <Text style={styles.fontStyle}>작성일</Text>
+                              <Text style={[styles.fontStyle, {color:'#6C67FF'}]}>{post.id}</Text>
                             </View>
                           </View>
 
@@ -131,20 +130,6 @@ export default function Home() {
 } // 중복되는 부분을 컴포넌트화 시키는 게 더 깔끔할 것 같습니다
 
 const styles = StyleSheet.create({
-  // Container
-  // 위와 같은 불필요한 주석은 제거하는게 좋습니다
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  wrapper: {
-    width: '100%',
-    height: '100%',
-    paddingTop: 78,
-    paddingHorizontal: 20,
-    paddingBottom: 41,
-  },
   profileArea: {
     width: '100%',
     paddingVertical: 8,
@@ -236,5 +221,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
+  },
+  fontStyle: {
+    fontSize: 12,
+    fontWeight: 'bold',
   }
 }) // 하나의 스타일 시트에 너무 많은 내용이 담겨있습니다

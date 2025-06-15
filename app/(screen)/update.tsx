@@ -1,18 +1,34 @@
 import { SafeAreaView, View, Text, TouchableOpacity, TextInput, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { PostContext } from "../context/PostContext";
 import BackButton from "../components/common/backButton";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import commonStyles, { buttonStyles } from "../styles/common";
 
 export default function Write() {
   const [inputHeight, setInputHeight] = useState(0);
+
+  const { id } = useLocalSearchParams();
+  const context = useContext(PostContext);
+
+  const { posts } = context;
+  const post = posts.find((post) => post.id === id);
+
+  if (!post) {
+      return <Text>게시물을 찾을 수 없습니다.</Text>; // post가 없으면 예외 처리
+  }
+
+  const currentUserId = "사용자1";
+  const userPosts = posts.filter((post) => post.userId === currentUserId);
   
     return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.wrapper}>
-            <View style={styles.writeWrap1}>
+        <SafeAreaView style={commonStyles.container}>
+          <View style={commonStyles.wrapper}>
+            <View style={commonStyles.writeWrap1}>
                   <BackButton />
-                  <TouchableOpacity style={styles.button}>
-                      <Text style={styles.buttonText}>완료</Text>
+                  <TouchableOpacity style={buttonStyles.button}>
+                      <Text style={buttonStyles.buttonText}>완료</Text>
                   </TouchableOpacity>
               </View>
               <View style={styles.contents}>
@@ -43,42 +59,10 @@ export default function Write() {
 }
 
 const styles = StyleSheet.create({
-  // Container
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    paddingTop: 78,
-    paddingHorizontal: 20,
-    paddingBottom: 41,
-  },
-  writeWrap1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-  },
   writeWrap2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 8,
-  },
-
-  button: {
-    justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    backgroundColor: '#6C67FF',
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'white',
   },
   addImageButton: {
     flexDirection: 'row',

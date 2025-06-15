@@ -4,31 +4,39 @@ import { useRouter } from "expo-router";
 import BackButton from "../components/common/backButton";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {PostContext} from '@/app/context/PostContext'
+import commonStyles, { buttonStyles } from "../styles/common";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Write() {
-  const [inputHeight, setInputHeight] = useState(0); // 기본값을 아래 Max와 맞추어 40정도로 주는 것도 괜찮습니다
+  const [inputHeight, setInputHeight] = useState(40);
 
-  const router = useRouter(); // 페이지 이동에 사용
+  const router = useRouter();
   const context = useContext(PostContext);
-  if (!context) return null; // 이런식으로 처리하게 될 경우 추후에 힘들어질 가능성이 있습니다, Error를 던지는 것이 훨씬 좋은 선택일 것 같습니다
 
-  const { posts, setPosts } = context;
+  const { posts, addPost } = context;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState("1");
 
   const handlePost = () => {
-    if (!title.trim() || !content.trim()) return;
+    if (!title.trim()) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!content.trim()) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
 
     const newPost = {
-      id: Date.now(), // id는 중복될 가능성이 높기 때문에 uuid와 같은 독립적인 명칭을 사용하는 것이 좋을 것 같습니다
+      id: uuidv4(),
       title,
       content,
       userId,
     };
 
-    setPosts([...posts, newPost]);
+    addPost(newPost);
 
     setTitle("");
     setContent("");
@@ -37,12 +45,12 @@ export default function Write() {
   }
 
     return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.wrapper}>
-            <View style={styles.writeWrap1}>
+        <SafeAreaView style={commonStyles.container}>
+          <View style={commonStyles.wrapper}>
+            <View style={commonStyles.writeWrap1}>
                   <BackButton />
-                  <TouchableOpacity style={styles.button} onPress={handlePost}>
-                      <Text style={styles.buttonText}>게시</Text>
+                  <TouchableOpacity style={buttonStyles.button} onPress={handlePost}>
+                      <Text style={buttonStyles.buttonText}>게시</Text>
                   </TouchableOpacity>
               </View>
               <View style={styles.contents}>
@@ -57,17 +65,21 @@ export default function Write() {
                       style={styles.title}
                       placeholder="제목 입력"
                       value={title}
-                      onChangeText={setTitle} {/* 바로 넘기는 것도 좋지만 지금처럼 단순한 컴포넌트가 아닐 경우에는 기능이 추가되거나 디버깅 용도로 별도 함수로 빼는 것도 좋습니다*/}
+                      onChangeText={setTitle}
                     />
                     <TextInput
-                      style={[styles.content, {height: Math.max(40, inputHeight)}]}
+                      style={[
+                        styles.content,
+                        {height: Math.max(40, inputHeight)}
+                      ]}
                       value={content}
                       placeholder="내용 입력"
                       multiline
-                      onChangeText={setContent} {/* 바로 넘기는 것도 좋지만 지금처럼 단순한 컴포넌트가 아닐 경우에는 기능이 추가되거나 디버깅 용도로 별도 함수로 빼는 것도 좋습니다*/}
+                      onChangeText={setContent}
                       onContentSizeChange={(e) =>
                         setInputHeight(e.nativeEvent.contentSize.height)
                       }
+                      underlineColorAndroid="transparent"
                     />
                 </View>
               </View>
@@ -76,43 +88,11 @@ export default function Write() {
     )
 }
 const styles = StyleSheet.create({
-  // Container
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    paddingTop: 78,
-    paddingHorizontal: 20,
-    paddingBottom: 41,
-  },
-  writeWrap1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-  },
   writeWrap2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 8,
   },
-
-  button: {
-    justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    backgroundColor: '#6C67FF',
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'white',
-  }, // 자주 쓰는 스타일은 공통화 하는 것이 좋습니다
   addImageButton: {
     flexDirection: 'row',
     alignItems: 'center',

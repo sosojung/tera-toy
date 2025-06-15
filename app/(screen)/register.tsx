@@ -1,22 +1,25 @@
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { useContext } from "react";
+import { PostContext } from "@/app/context/PostContext";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import commonStyles, { inputStyles } from "../styles/common";
 
 export default function Register() {
     const router = useRouter();
 
     return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.wrapper}>
+        <SafeAreaView style={commonStyles.container}>
+          <View style={[commonStyles.wrapper, {paddingTop: 24}]}>
             <Text style={styles.text}>TERA</Text>
             <View>
               <Text style={styles.loginText}>회원가입</Text>
-              <View> {/* 여기 있는 View는 불필요한 것 같습니다*/}
-                <TextInput style={styles.input} placeholder="이메일" />
-                <TextInput style={styles.input} placeholder="아이디" />
-                <TextInput style={styles.input} placeholder="비밀번호" />  {/* 보안상 secureTextEntry가 들어가면 좋을 것 같습니다*/}
+              <View style={{gap: 8,}}>
+                <TextInput style={inputStyles.input} placeholder="이메일" />
+                <TextInput style={inputStyles.input} placeholder="아이디" />
+                <TextInput style={inputStyles.input} secureTextEntry={true} placeholder="비밀번호" />
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                    <TextInput style={styles.confirmInput} placeholder="비밀번호 확인" />
+                    <TextInput style={styles.confirmInput} secureTextEntry={true} placeholder="비밀번호 확인" />
                     <TouchableOpacity style={styles.confirmButton}>
                       <Text style={{fontSize: 15, color: '#fff', fontWeight: 400}}>확인</Text>
                     </TouchableOpacity>
@@ -34,21 +37,6 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-    // Container
-    container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
-    wrapper: {
-      width: "100%",
-      height: "100%",
-      paddingTop: 24,
-      paddingHorizontal: 20,
-      paddingBottom: 41,
-    },
-
-    // Text
     text: {
       fontSize: 50,
       color: "#6C67FF",
@@ -63,17 +51,6 @@ const styles = StyleSheet.create({
       marginBottom: 40,
     },
 
-    // Input
-    input: {
-      width: "100%",
-      height: 46,
-      padding: 10,
-      marginBottom: 8,
-      borderRadius: 8,
-      fontSize: 15,
-      backgroundColor: '#E0DFFF',
-      color: "#4D49B5",
-    },
     confirmInput: {
       flex: 1,
       width: "100%",
@@ -86,7 +63,6 @@ const styles = StyleSheet.create({
       color: "#4D49B5",
     },
     
-    // Button
     button: {
       justifyContent: "center",
       width: "100%",

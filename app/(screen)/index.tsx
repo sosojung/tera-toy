@@ -1,18 +1,19 @@
 import { SafeAreaView, Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { Link, useRouter } from "expo-router";
+import commonStyles from "../styles/common";
 
 export default function Index() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.wrapper}>
+    <SafeAreaView style={commonStyles.container}>
+      <View style={[commonStyles.wrapper, {paddingTop: 24}]}>
         <Text style={styles.text}>TERA</Text>
         <View>
           <Text style={styles.loginText}>로그인</Text>
           <View>
             <TextInput style={styles.input} placeholder="아이디" />
-            <TextInput style={styles.input} placeholder="비밀번호" />
+            <TextInput style={styles.input} secureTextEntry={true} placeholder="비밀번호" />
           </View>
             <TouchableOpacity
               style={styles.button}
@@ -27,21 +28,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  // Container
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    paddingTop: 24,
-    paddingHorizontal: 20,
-    paddingBottom: 41,
-  },
-
-  // Text
   text: {
     fontSize: 50,
     color: "#6C67FF",
@@ -65,8 +51,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: "#6C67FF",
   },
-
-  // Input
   input: {
     width: "100%",
     height: 46,
